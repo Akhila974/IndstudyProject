@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<head>
+<title>Final Project</title>
+<script src="https://csc8470-fall2022.github.io/lib/three.js"></script>
+<script src="https://csc8470-fall2022.github.io/lib/OrbitControls.js"></script>
+<script src="https://csc8470-fall2022.github.io/lib/KeyBoardState.js"></script>
+
+
+
+<script>
+    var scene, camera, renderer; // Three.js rendering basics
+    var canvas; // The canvas on which the image is rendered
+    var eyeLight;
+    var mouse;
+    var swings,swingseat;
+    var angle=0;
+    var clock = new THREE.Clock();
+    var startTime = clock.getElapsedTime();
+    var texLoader = new THREE.TextureLoader();
+    var keyboard = new KeyboardState();
+    var audioLoader = new THREE.AudioLoader();
+    
+    // Create a camera, sitting on the positive z-axis.  The camera is not part of the scene
+    function createCamera() {
+    camera = new THREE.PerspectiveCamera(110, canvas.width/canvas.height, 0.1, 500);
+    camera.position.set(0,200,190);
+    //camera.lookAt(new THREE.Vector3(0,40,0));
+    mouse = new THREE.OrbitControls(camera, renderer.domElement);
+    }
+    
+    //console.log(basehandlelong.rotation.x,bodyparts.rotation.y,bodyparts.position.y,bodyparts.position.z,bodyparts.position.x,personleglup.rotation.x,personleglup.position.z,personlegrup.position.z,personlegrup.position.y,personhandl.rotation.z,personhandr.rotation.z,personlegrup.rotation.z,bodyparts1.rotation.y,bodyparts1.position.y,bodyparts1.position.z,bodyparts1.position.x);
+    
+    var keyframes = [
+
+        [0,1.5707963267948966 ,0 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.1, 1.950796326794897 ,0 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.15, 1.950796326794897 ,-1.1800000000000006 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.2, 1.950796326794897 ,-1.1800000000000006 ,30 ,150 ,206.10000000000082 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.3, 1.950796326794897 ,-0.17999999999999983 ,30 ,150 ,206.10000000000082 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.35, 1.950796326794897 ,-0.17999999999999983 ,30 ,162.5 ,206.10000000000082 ,1.5300000000000002 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.4, 1.950796326794897 ,-0.17999999999999983 ,55 ,131 ,206.10000000000082 ,1.5300000000000002 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.45, 1.8707963267948968 ,-0.17999999999999983 ,52 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.5, 1.7907963267948968 ,-0.17999999999999983 ,63 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.55, 1.6107963267948966 ,-0.17999999999999983 ,79 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.6, 1.5307963267948965 ,-0.17999999999999983 ,87.5 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+
+
+
+
+
+        [0.7, 1.6107963267948966 ,-0.17999999999999983 ,79 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.75, 1.7907963267948968 ,-0.17999999999999983 ,63 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.8, 1.8707963267948968 ,-0.17999999999999983 ,52 ,131 ,206.10000000000082 ,1.8900000000000006 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.85, 1.950796326794897 ,-0.17999999999999983 ,55 ,131 ,206.10000000000082 ,1.5300000000000002 ,-2.8799999999999994 ,-3.149999999999999 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.9, 1.950796326794897 ,-0.17999999999999983 ,30 ,150 ,206.10000000000082 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.92, 1.950796326794897 ,-1.1800000000000006 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.93, 1.950796326794897 ,0 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+        [0.94,1.5707963267948966 ,0 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0,-50],
+
+
+        [0.95,1.5707963267948966 ,0 ,30 ,150, 0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80, 0 ,-50],
+        [0.97,1.5707963267948966 ,0 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0, 0, 3.141592653589793 ,30 ,-80 ,0 ,129.10000000000028],
+        [1,1.5707963267948966 ,0 ,30 ,150 ,0 ,0 ,0 ,0 ,-10 ,0 ,0 ,0 ,3.141592653589793 ,30 ,-80 ,0],
+
+        
+    
+        ];
+
+    
+    var Camerakeyframes = [
+
+    [0, 120, 200,120],
+    [0.25, 120, 250,120],
+    [0.55, 120, 150,120],
+    [0.75, 120, 150,120],
+    [0.80, 120, 150,120],
+    [0.85, 120, 150,120],
+    [1   , 120, 250,120],
+    ];
+    
+    function keyframeInterp(keyframes, cycleTime, animTime) {
+
+    var keys=[];  // array of interpolated values
+    var nKeys = keyframes[0].length-1;  // number of keys
+
+    // find time elapsed within the current cycle and scale to [0,1]
+    var time = (animTime % cycleTime) / cycleTime; 
+    
+    // find the next keyframe based on time
+    for (var i = 0; i < keyframes.length; i++) {
+    if (time < keyframes[i][0]) break;
+    }
+    i = i-1; // previous keyframe is at index i-1
+
+    // scale interpolation parameter t to interval [0,1]
+    var t = (time - keyframes[i][0]) / (keyframes[i+1][0] - keyframes[i][0]); 
+    
+    // linear interpolation between keyframes i and i+1 
+    for(var j = 1; j <= nKeys; j++)
+    keys.push((1-t) * keyframes[i][j] + t * keyframes[i+1][j]); 
+
+    return keys;
+    }   
+     
+
+    //walls
+    function createBackground(width, height)
+    {
+    var background = new THREE.Object3D(); 
+
+    var texLoader = new THREE.TextureLoader();
+    var backgroundTexture = texLoader.load("groundgrass.jpg");
+    var backgroundMaterial = new THREE.MeshPhongMaterial( { map: backgroundTexture ,side:THREE.DoubleSide} );
+    backgroundTexture.wrapS = THREE.MirroredRepeatWrapping;
+    backgroundTexture.wrapT = THREE.MirroredRepeatWrapping;
+    backgroundTexture.repeat.set( 4,4 );
+
+    var geom = new THREE.PlaneGeometry(700, 700); //width,height
+    var material = new THREE.MeshPhongMaterial({color: 0x00FF00, side: THREE.DoubleSide}); 
+    var ground = new THREE.Mesh( geom, material);
+    //var ground = new THREE.Mesh( geom, backgroundMaterial);
+    ground.rotation.x = Math.PI/2;
+    scene.add(ground);
+    var material = new THREE.MeshPhongMaterial({color: 0x00FF00, side: THREE.DoubleSide}); 
+
+    //ground
+    var geometry = new THREE.BoxGeometry( width, height);
+    var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+    var texLoader = new THREE.TextureLoader();
+    var wallTexture = texLoader.load("wall.jpg");
+    var wallMaterial = new THREE.MeshPhongMaterial( { map: wallTexture,side: THREE.DoubleSide } );
+    wallTexture.wrapS = THREE.MirroredRepeatWrapping;
+    wallTexture.wrapT = THREE.MirroredRepeatWrapping;
+    wallTexture.repeat.set( 2,16 );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, wallMaterial );
+
+    background.add( cube ); 
+    return background;
+    }
+
+
+    
+    function createStand(width,height,depth)
+    {
+    var stands = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry( width, height, depth);//width,height,depth
+    var material = new THREE.MeshPhongMaterial( {color: 0xffffff} );
+    var texLoader = new THREE.TextureLoader();
+
+    var standTexture = texLoader.load("swingstandnew.jpg");
+    var standMaterial = new THREE.MeshPhongMaterial( { map: standTexture,side: THREE.DoubleSide } );
+    standTexture.wrapS = THREE.MirroredRepeatWrapping;
+    standTexture.wrapT = THREE.MirroredRepeatWrapping;
+    standTexture.repeat.set( 2,16 );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, standMaterial );
+    stands.add( cube );
+    return stands;
+    }
+
+
+    function createSky(width, height)
+    {
+    var sky = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry( width, height);
+    var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+    var texLoader = new THREE.TextureLoader();
+    var skyTexture = texLoader.load("sky.jpg");
+    var skyMaterial = new THREE.MeshPhongMaterial( { map: skyTexture,side: THREE.DoubleSide } );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, skyMaterial );
+    sky.add( cube ); 
+    return sky;
+    }
+
+
+    function createMerry(width, height)
+    {
+    var merry = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry( width, height);
+    var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+    var texLoader = new THREE.TextureLoader();
+    var skyTexture = texLoader.load("skynew.jpg");
+    var skyMaterial = new THREE.MeshPhongMaterial( { map: skyTexture,side: THREE.DoubleSide } );
+    skyTexture.wrapS = THREE.MirroredRepeatWrapping;
+    skyTexture.wrapT = THREE.MirroredRepeatWrapping;
+    skyTexture.repeat.set( 2,2 );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, skyMaterial );
+    merry.add( cube ); 
+    return merry;
+    }
+
+
+    function createSkyhouse(width, height)
+    {
+    var house = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry( width, height);
+    var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+    var texLoader = new THREE.TextureLoader();
+    var houseTexture = texLoader.load("house.jpg");
+    var houseMaterial = new THREE.MeshPhongMaterial( { map: houseTexture,side: THREE.DoubleSide } );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, houseMaterial );
+    house.add( cube ); 
+    house.rotation.z=Math.PI;
+    return house;
+    }
+
+
+    function createWalls()
+    {
+    var walls = new THREE.Object3D();
+
+    var background1 = createBackground(600,50);//right wall
+    background1.rotation.y = Math.PI/2;
+    background1.position.set(300,25,0);
+    scene.add(background1);
+
+    var background2 = createBackground(600,50);// left wall
+    background2.rotation.y = Math.PI/2;
+    background2.position.set(-300,25,0);
+    scene.add(background2);
+
+    var background3 = createBackground(600,50);// back wall 
+    background3.position.set(0,25,-300);
+    scene.add(background3);
+
+    var background4 = createBackground(600,50);// front wall 
+    background4.position.set(0,25,300);
+    scene.add(background4);
+
+    var backgroundr = createSky(700,450);//right sky
+    backgroundr.rotation.y = Math.PI/2;
+    backgroundr.position.set(350,225,0);
+    scene.add(backgroundr);
+
+    var backgroundl = createSky(700,450);// left sky
+    backgroundl.rotation.y = Math.PI/2;
+    backgroundl.position.set(-350,225,0);
+    scene.add(backgroundl);
+
+    var backgroundb = createMerry(700,450);// back sky 
+    backgroundb.position.set(0,225,-350);
+    backgroundb.rotation.x=Math.PI;
+    scene.add(backgroundb);
+
+    var backgroundf = createSkyhouse(700,450);// front sky
+    backgroundf.position.set(0,225,350);
+    scene.add(backgroundf);
+
+
+   
+    var geom = new THREE.BoxGeometry(60, 30); //width,height //seat to sit
+    var material = new THREE.MeshPhongMaterial({color: 0x000000, side: THREE.DoubleSide});
+    var texLoader = new THREE.TextureLoader();
+
+    
+    return walls;  
+    }
+
+    //trees
+    function createTree(radtop, radbot, height, radseg)
+    {
+    var tree = new THREE.Object3D();
+    var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg );//radtop,radbot,height,radseg
+    var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
+    var texLoader = new THREE.TextureLoader();
+    var barkTexture = texLoader.load("bark.jpg");
+    var barkMaterial = new THREE.MeshPhongMaterial( { map: barkTexture,side: THREE.DoubleSide } );
+    var cylinder = new THREE.Mesh( geometry, material );
+    //var cylinder = new THREE.Mesh( geometry, barkMaterial );
+    tree.add( cylinder );
+
+    var geometry = new THREE.ConeGeometry( 35, 80, 42 );
+    var texLoader = new THREE.TextureLoader();
+    var christmasTexture = texLoader.load("christree.jpg");
+    var christmasMaterial = new THREE.MeshPhongMaterial( { map: christmasTexture ,side:THREE.DoubleSide} );
+    christmasTexture.wrapS = THREE.MirroredRepeatWrapping;
+    christmasTexture.wrapT = THREE.MirroredRepeatWrapping;
+    christmasTexture.repeat.set( 4,4 );
+    var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+    var cone = new THREE.Mesh( geometry, material );
+    //var cone = new THREE.Mesh( geometry, christmasMaterial );
+    cone.position.set(0,45,0);
+    tree.add( cone );
+    return tree;
+
+    }
+
+    
+    function createTrees()
+    {
+    var trees = new THREE.Object3D();
+
+    var lefttree = createTree(10, 18, 50, 32);
+    lefttree.position.set(-240,25,-260);
+    scene.add(lefttree);
+
+    var righttree = createTree(10, 18, 50, 32);
+    righttree.position.set(240,25,-260);
+    scene.add(righttree); 
+
+    var blefttree = createTree(10, 18, 50, 32);
+    blefttree.position.set(-240,25,260);
+    scene.add(blefttree);
+
+    var brighttree = createTree(10, 18, 50, 32);
+    brighttree.position.set(240,25,260);
+    scene.add(brighttree); 
+
+    return trees;
+    }
+
+    function createtableParts(width, height, depth)
+    {
+    var tableparts = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry( width, height, depth );
+    var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
+    var texLoader = new THREE.TextureLoader();
+    var tableTexture = texLoader.load("table.jpg");
+    var tableMaterial = new THREE.MeshPhongMaterial( { map: tableTexture,side: THREE.DoubleSide } );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, tableMaterial );
+    tableparts.add( cube );
+    return tableparts;
+    }
+
+    function createtableRods(width, height, depth)
+    {
+    var tablerods = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry( width, height, depth );
+    var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
+    var texLoader = new THREE.TextureLoader();
+    var rodsTexture = texLoader.load("tablerods.jpg");
+    var rodsMaterial = new THREE.MeshPhongMaterial( { map: rodsTexture,side: THREE.DoubleSide } );
+    var cube = new THREE.Mesh( geometry, material );
+    //var cube = new THREE.Mesh( geometry, rodsMaterial );
+    tablerods.add( cube );
+    return tablerods;
+    }
+
+    function createTable()
+    {
+    var tables = new THREE.Object3D();
+
+    var tableseat = createtableParts(30,100,5);//table seat
+    tableseat.position.set(0,27.5,0);
+    tableseat.rotation.x=Math.PI/2;
+    scene.add(tableseat);
+
+    var tableback = createtableParts(100,30,5);//table back
+    tableback.position.set(-15,42.5,0);
+    tableback.rotation.y=Math.PI/2;
+    scene.add(tableback);
+
+    var tablefrleft = createtableRods(5,15,3);//table front left bal rod
+    tablefrleft.position.set(-13,-48.5,5);
+    tablefrleft.rotation.x=Math.PI/2;
+    scene.add(tablefrleft);
+
+    var tablefrright = createtableRods(5,15,3);//table front right bal rod
+    tablefrright.position.set(-13,48.5,5);
+    tablefrright.rotation.x=Math.PI/2;
+    scene.add(tablefrright);
+
+    var tablebackleft = createtableRods(5,15,3);//table back left bal rod
+    tablebackleft.position.set(13,48.5,5);
+    tablebackleft.rotation.x=Math.PI/2;
+    scene.add(tablebackleft);
+
+    var tablebackright = createtableRods(5,15,3);//table back right bal rod
+    tablebackright.position.set(13,-48.5,5);
+    tablebackright.rotation.x=Math.PI/2;
+    scene.add(tablebackright);
+
+
+    tables.add(tableseat);
+    tables.add(tableback);
+    tableseat.add(tablefrleft);
+    tableseat.add(tablefrright);
+    tableseat.add(tablebackleft);
+    tableseat.add(tablebackright);
+
+    tables.position.set(-220,-15,180);
+    return tables;
+    }
+
+    function createpersonParts(width, height, depth)
+    {
+    var personparts = new THREE.Object3D();
+    var geometry = new THREE.BoxGeometry(width, height, depth);
+    var material = new THREE.MeshPhongMaterial( {color: 0xffffff} );
+    var texLoader = new THREE.TextureLoader();
+    var dressTexture = texLoader.load("dress.jpg");
+    var dressMaterial = new THREE.MeshPhongMaterial( { map: dressTexture,side: THREE.DoubleSide } );
+    //var cube = new THREE.Mesh( geometry, dressMaterial );
+    var cube = new THREE.Mesh( geometry, material );
+    personparts.add( cube );
+    return personparts;
+    }
+
+    function createEyes(radius, widthseg , heightseg)
+    {
+    var eyes = new THREE.Object3D();
+    var geometry = new THREE.SphereGeometry( radius, widthseg , heightseg );
+    var texLoader = new THREE.TextureLoader();
+    var eyesTexture = texLoader.load("eyes.jpg");
+    var eyesMaterial = new THREE.MeshPhongMaterial( { map: eyesTexture,side: THREE.DoubleSide } );
+    var material = new THREE.MeshPhongMaterial( { color: 0xffffff } );
+    var sphere = new THREE.Mesh( geometry, material );
+    //var sphere = new THREE.Mesh( geometry, eyesMaterial );
+    eyes.rotation.y=Math.PI/2;
+    eyes.add( sphere );
+    return eyes;
+    }
+
+    function createHead(radius, widthseg , heightseg)
+    {
+    var head = new THREE.Object3D();
+    var geometry = new THREE.SphereGeometry( radius, widthseg , heightseg );
+    var material = new THREE.MeshPhongMaterial( { color: 0xc58c85 } );
+    var sphere = new THREE.Mesh( geometry, material );
+    head.add( sphere );
+    return head; 
+    }
+
+    
+
+    function createNeck(radtop, radbot, height, radseg)
+    {
+    var neck = new THREE.Object3D();
+    var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg );
+    var material = new THREE.MeshPhongMaterial( {color: 0xffffff} );
+    var cylinder = new THREE.Mesh( geometry, material );
+    neck.add( cylinder );
+    return neck;
+    }
+
+
+
+    function createPerson() 
+    {
+    var person = new THREE.Object3D();
+
+    var eyer = createEyes(0.8,32,16);
+    eyer.position.set(-2,2,-4);
+    scene.add(eyer);
+
+    var eyel = createEyes(0.8,32,16);
+    eyel.position.set(2,2,-4);
+    scene.add(eyel);
+
+    var neck = createNeck(1.8,1.8,3,8);
+    neck.position.set(0,11.5,0);
+    scene.add(neck);
+
+    var mouth = createpersonParts(2,1,1);
+    mouth.position.set(0,0,-5)
+    scene.add(mouth);
+
+    var personbody = createpersonParts(15,20,4);
+    personbody.position.set(0,0,0);
+    scene.add(personbody);
+
+    var personhead = createHead(5,32,16);
+    personhead.position.set(0,6,0);
+    scene.add(personhead);
+
+    var personlegrup = createpersonParts(5,10,4);
+    personlegrup.position.set(5,-10,0);
+    scene.add(personlegrup);
+
+    var personleglup = createpersonParts(5,10,4);
+    personleglup.position.set(-5,-10,0);
+    scene.add(personleglup);
+
+    var personlegrd = createpersonParts(5,10,4);
+    personlegrd.position.set(0,-5,0);
+    scene.add(personlegrd);
+
+    var personlegld = createpersonParts(5,10,4);
+    personlegld.position.set(0,-5,0);
+    scene.add(personlegrd);
+
+    var personhandr = createpersonParts(3,10,2);
+    personhandr.position.set(9,5,0);
+    personhandr.rotation.x=Math.PI/6;
+    scene.add(personhandr);
+
+    var personhandl = createpersonParts(3,10,2);
+    personhandl.position.set(-9,5,0);
+    personhandl.rotation.x=Math.PI/6;
+    scene.add(personhandl);
+
+    var personhandrd = createpersonParts(3,10,2);
+    personhandrd.position.set(0,-9,-2);
+    personhandrd.rotation.x=Math.PI/6;
+    scene.add(personhandrd);
+
+    var personhandld = createpersonParts(3,10,2);
+    personhandld.position.set(0,-9,-2);
+    personhandld.rotation.x=Math.PI/6;
+    scene.add(personhandld);
+
+
+    person.add(personbody);
+    person.add(neck);
+    person.add(personhandl);
+    person.add(personhandr);
+    person.add(personleglup);
+    person.add(personlegrup);
+    personhead.add(eyel);
+    personhead.add(eyer);
+    personhead.add(mouth);
+  
+    neck.add(personhead);
+    personlegrup.add(personlegrd);
+    personleglup.add(personlegld);
+    personhandr.add(personhandrd);
+    personhandl.add(personhandld);
+
+
+    person.position.set(0,30,150);
+    person.scale.x+=0.5;
+    person.scale.y+=0.5;
+    person.scale.z+=0.5;
+
+    return person;
+
+    }
+
+
+    function createDustbin()
+    {
+        var bin = new THREE.Object3D();
+
+        var dustbinTexture = texLoader.load("bingreen.jpg");
+        var dustbinMaterial = new THREE.MeshPhongMaterial( { map: dustbinTexture ,side:THREE.DoubleSide} );
+        dustbinTexture.wrapS = THREE.MirroredRepeatWrapping;
+        dustbinTexture.wrapT = THREE.MirroredRepeatWrapping;
+        dustbinTexture.repeat.set( 4,4 );
+
+        var geometry = new THREE.CylinderGeometry( 25, 25, 60, 32 ); 
+        //var geometry = new THREE.CylinderGeometry(radtop, radbot, height, radseg); 
+        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
+        //var cylinder = new THREE.Mesh( geometry, material );
+        var cylinder = new THREE.Mesh( geometry, dustbinMaterial );  
+        bin.add( cylinder );
+        return bin;
+    }
+
+    function createDustbintop()
+    {
+        var bintop = new THREE.Object3D();
+        var geometry = new THREE.CylinderGeometry( 35, 25, 10, 32 ); 
+        //var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
+        var material = new THREE.MeshBasicMaterial( {color: 0xff0000} ); 
+        var cylinder = new THREE.Mesh( geometry, material ); 
+        bintop.add( cylinder );
+        return bintop;
+    }
+    function createHouselegs(radtop, radbot, height, radseg)
+    {
+        var hlegs = new THREE.Object3D();
+        var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} ); 
+        var cylinder = new THREE.Mesh( geometry, material ); 
+        hlegs.add( cylinder );
+        return hlegs;
+    }
+
+    function createHouselegstop(width, height, depth)
+    {
+        var hlegstop = new THREE.Object3D();
+        var geometry = new THREE.BoxGeometry( width, height, depth );
+        var material = new THREE.MeshBasicMaterial( {color: 0xffffff} ); 
+        var cube = new THREE.Mesh( geometry, material ); 
+        hlegstop.add( cube );
+        return hlegstop;
+    }
+
+    function createHousesides(width, height)
+    {
+        var hsides = new THREE.Object3D();
+        var geometry = new THREE.PlaneGeometry( width, height );
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+        var plane = new THREE.Mesh( geometry, material );
+        hsides.add( plane );
+        return hsides;
+    }
+
+
+    function createHousetop(radtop, radbot, height, radseg)
+    {
+        var htop = new THREE.Object3D();
+        var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
+        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
+        var cylinder = new THREE.Mesh( geometry, material );
+        htop.add(cylinder);
+        return htop;
+    }
+
+
+    function createDoor(width, height)
+    {
+        var hdoor = new THREE.Object3D();
+        var geometry = new THREE.PlaneGeometry( width, height );
+        var material = new THREE.MeshBasicMaterial( {color: 0x000000, side: THREE.DoubleSide} );
+        var plane = new THREE.Mesh( geometry, material );
+        hdoor.add( plane );
+        return hdoor;
+    }
+
+
+    function createTube()
+    {
+        var tube=new THREE.Object3D();
+
+        class CustomSinCurve extends THREE.Curve {
+
+        constructor( scale = 1 ) {
+        super();
+        this.scale = scale;
+        }
+
+        getPoint( t, optionalTarget = new THREE.Vector3() ) {
+
+        const tx = t * 3 - 1.5;
+        const ty = Math.sin( -1.5 * -Math.PI * t );
+        const tz = 0;
+
+        return optionalTarget.set( tx, ty, tz ).multiplyScalar( this.scale );
+        }
+        }
+
+        var path = new CustomSinCurve( 58 );
+        var geometry = new THREE.TubeGeometry( path, 64, 6, 80, false );
+        var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+        var mesh = new THREE.Mesh( geometry, material );
+        tube.add( mesh );
+
+        return tube;
+    }
+
+
+
+    function createLadder(radtop, radbot, height, radseg)
+    {
+        var ladder = new THREE.Object3D();
+        var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
+        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
+        var cylinder = new THREE.Mesh( geometry, material );
+        ladder.add(cylinder);
+        return ladder;
+    }
+
+
+    function createTeeterBoard(width, height, depth)
+    {
+        var teeter = new THREE.Object3D();
+        var geometry = new THREE.BoxGeometry( width, height, depth );
+        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
+        var cube = new THREE.Mesh( geometry, material ); 
+        teeter.add( cube );
+        return teeter;
+    }
+
+    function createHouse() 
+    {
+        var house = new THREE.Object3D();
+
+        var houselegsfl = createHouselegs(5, 5, 80, 32);
+        houselegsfl.position.set(-50,-40,60);
+        scene.add(houselegsfl);
+
+        var houselegsfr = createHouselegs(5, 5, 80, 32);
+        houselegsfr.position.set(50,-40,60);
+        scene.add(houselegsfr);
+
+        var houselegsbl = createHouselegs(5, 5, 80, 32);
+        houselegsbl.position.set(-50,-40,-60);
+        scene.add(houselegsbl);
+
+        var houselegsbr = createHouselegs(5, 5, 80, 32);
+        houselegsbr.position.set(50,-40,-60);
+        scene.add(houselegsbr);
+
+
+        var houselegstop = createHouselegstop(120, 15, 120);
+        houselegstop.position.set(0,80,0);
+        scene.add(houselegstop);
+
+
+        var housesidesb = createHousesides(60, 50);
+        housesidesb.position.set(0,110,-30);
+        scene.add(housesidesb);
+
+
+        var housesidesf = createHousesides(60, 50);
+        housesidesf.position.set(0,110,30);
+        scene.add(housesidesf);
+
+
+        var housesidesl = createHousesides(60, 50);
+        housesidesl.position.set(-30,110,0);
+        housesidesl.rotation.y=Math.PI/2;
+        scene.add(housesidesl);
+
+        var housesidesr = createHousesides(60, 50);
+        housesidesr.position.set(30,110,0);
+        housesidesr.rotation.y=Math.PI/2;
+        scene.add(housesidesr);
+
+
+        var housetopmost = createHousetop(0,52,18,4);
+        housetopmost.position.set(0,145,0);
+        housetopmost.rotation.y=Math.PI/4;
+        scene.add(housetopmost);
+
+        var housetube = createTube();
+        housetube.position.set(0,-5,90);
+        housetube.rotation.y=-Math.PI/2;
+        scene.add(housetube);
+
+
+        var housedoor = createDoor(30, 30);
+        housedoor.position.set(31,10,0);
+        housedoor.rotation.y=Math.PI/2;
+        scene.add(housedoor);
+
+
+        var houseladder1 = createLadder( 2, 2, 130, 64);
+        houseladder1.position.set(104,47,-20);
+        houseladder1.rotation.z=Math.PI/4;
+        scene.add(houseladder1);
+
+
+        var houseladder2 = createLadder( 2, 2, 130, 64);
+        houseladder2.position.set(104,47,20);
+        houseladder2.rotation.z=Math.PI/4;
+        scene.add(houseladder2);
+
+        var houseladders1 = createLadder( 2, 2, 40, 64);
+        houseladders1.position.set(64,87,0);
+        houseladders1.rotation.x=-Math.PI/2;
+        scene.add(houseladders1);
+
+
+        var houseladders2 = createLadder( 2, 2, 40, 64);
+        houseladders2.position.set(84,67,0);
+        houseladders2.rotation.x=-Math.PI/2;
+        scene.add(houseladders2);
+
+        var houseladders3 = createLadder( 2, 2, 40, 64);
+        houseladders3.position.set(104,47,0);
+        houseladders3.rotation.x=-Math.PI/2;
+        scene.add(houseladders3);
+
+
+        var houseladders4 = createLadder( 2, 2, 40, 64);
+        houseladders4.position.set(124,27,0);
+        houseladders4.rotation.x=-Math.PI/2;
+        scene.add(houseladders4);
+
+        var houseladders5 = createLadder( 2, 2, 40, 64);
+        houseladders5.position.set(144,7,0);
+        houseladders5.rotation.x=-Math.PI/2;
+        scene.add(houseladders5);
+
+        house.add(houselegstop);
+        houselegstop.add(houselegsfl);
+        houselegstop.add(houselegsfr);
+        houselegstop.add(houselegsbl);
+        houselegstop.add(houselegsbr);
+        house.add(housesidesb);
+        house.add(housesidesf);
+        house.add(housesidesl);
+        house.add(housesidesr);
+        house.add(housetopmost);
+        houselegstop.add(housetube);
+        houselegstop.add(housedoor);
+
+
+        house.add(houseladder1);
+        house.add(houseladder2);
+        house.add(houseladders1);
+        house.add(houseladders2);
+        house.add(houseladders3);
+        house.add(houseladders4);
+        house.add(houseladders5);
+
+
+        house.position.set(-210,0,0);
+
+        return house;
+        
+    }
+
+
+    function Teeter()
+    {
+        var teetercreation = new THREE.Object3D();
+
+        var base = createTeeterBoard(35, 12, 35);//base 1
+        base.position.set(200,6,40);
+        scene.add(base);
+
+        var basetop = createTeeterBoard(5, 50, 5);//base top 2
+        basetop.position.set(0,25,0);
+        scene.add(basetop);
+
+        var basehandlelong = createTeeterBoard(5, 180, 5);//base handle long 3
+        basehandlelong.position.set(200,56,40);
+        basehandlelong.rotation.x=Math.PI/2;
+        scene.add(basehandlelong);
+
+        var baseseatfar = createTeeterBoard(25, 4, 35);//base seat far 4
+        baseseatfar.position.set(0,84,-4);
+        baseseatfar.rotation.x=Math.PI/2;
+        scene.add(baseseatfar);
+
+        var baseseatnear = createTeeterBoard(25, 4, 35);//base seat near 5 
+        baseseatnear.position.set(0,-84,-4);
+        baseseatnear.rotation.x=Math.PI/2;
+        scene.add(baseseatnear);
+
+        var nearhandle = createTeeterBoard(1, 25, 3);//hand catch ,near, down straight 6
+        nearhandle.position.set(0,45,-14);
+        nearhandle.rotation.x=Math.PI/2;
+        scene.add(nearhandle);
+
+        var farhandle = createTeeterBoard(1, 25, 3);//hand catch far down straight 7
+        farhandle.position.set(0,-45,-14);
+        farhandle.rotation.x=Math.PI/2;
+        scene.add(farhandle);
+
+        var nearhandletop = createTeeterBoard(2, 25, 4);//hand catch near top catch 8
+        nearhandletop.position.set(0,-12,0);
+        nearhandletop.rotation.z=Math.PI/2;
+        scene.add(nearhandletop);
+
+
+        var farhandletop = createTeeterBoard(2, 25, 4);//hand catch near top catch 9
+        farhandletop.position.set(0,-12,0);
+        farhandletop.rotation.z=Math.PI/2;
+        scene.add(farhandletop);
+
+
+        teetercreation.add(base);
+        base.add(basetop);
+        teetercreation.add(basehandlelong);
+        basehandlelong.add(baseseatfar);
+        basehandlelong.add(baseseatnear);
+        basehandlelong.add(nearhandle);
+        basehandlelong.add(farhandle);
+        nearhandle.add(nearhandletop);
+        farhandle.add(farhandletop);
+
+
+        return teetercreation;
+
+    }
+
+    function createStripe(radius,tube,radseg,tubseg,arc) {
+        
+        var stripe=new THREE.Object3D();
+
+        var geometry = new THREE.TorusGeometry( radius,tube,radseg,tubseg,arc); 
+        var material = new THREE.MeshBasicMaterial( { color: 0x000000 } ); 
+        var torus = new THREE.Mesh( geometry, material ); 
+        stripe.add( torus );
+
+        return stripe;
+    }
+
+
+    
+    // Create the scene. This function is called once, as soon as the page loads.
+    // The renderer has already been created before this function is called.
+    function createScene() {
+
+    renderer.setClearColor(0); // Set background color (0, or 0x000000, is black)
+    scene = new THREE.Scene(); // Create a new scene which we can add objects to-
+
+    wallparts = createWalls();
+    scene.add(wallparts);
+
+    treeparts = createTrees();
+    scene.add(treeparts); 
+
+    tableparts = createTable();
+    tableparts.position.set(130,-15,-250);
+    tableparts.rotation.y=-Math.PI/2;
+    scene.add(tableparts);
+
+    tableparts1 = createTable();
+    tableparts1.position.set(-130,-15,-250);
+    tableparts1.rotation.y=-Math.PI/2;
+    scene.add(tableparts1);
+
+    bodyparts = createPerson();
+    scene.add(bodyparts);
+
+    bodyparts1 = createPerson();
+    bodyparts1.position.set(0,30,-80);
+    bodyparts1.rotation.y=Math.PI;
+    scene.add(bodyparts1);
+
+
+    binparts=createDustbin();
+    binparts.position.set(0,40,-250);
+    scene.add(binparts);
+
+    binparts1=createDustbintop();
+    binparts1.position.set(0,75,-250);
+    scene.add(binparts1);
+
+
+    houseparts=createHouse();
+    scene.add(houseparts);
+
+    teeterparts=Teeter();
+    scene.add(teeterparts);
+
+    stripeparts=createStripe(45,4,16,100,3);
+    stripeparts.position.set(0,0,240);
+    stripeparts.rotation.y=Math.PI/2;
+    scene.add(stripeparts);
+
+
+    stripeparts1=createStripe(45,4,16,100,3);
+    stripeparts1.position.set(60,0,240);
+    stripeparts1.rotation.y=Math.PI/2;
+    scene.add(stripeparts1);
+
+    stripeparts2=createStripe(45,4,16,100,3);
+    stripeparts2.position.set(-60,0,240);
+    stripeparts2.rotation.y=Math.PI/2;
+    scene.add(stripeparts2);
+
+    ball=createBall(12,32,15);
+    ball.position.set(0,12,-50);
+    scene.add(ball);
+    
+
+    personbody = bodyparts.children[0];
+    neck = bodyparts.children[1];
+    personhandl = bodyparts.children[2];
+    personhandr = bodyparts.children[3];
+    personleglup = bodyparts.children[4];
+    personlegrup = bodyparts.children[5];
+    personhandld = personhandl.children[2];
+    personhandrd = personhandr.children[3];
+    personlegld = personleglup.children[4];
+    personlegrd =personlegrup.children[5];
+
+
+    houselegstop=houseparts.children[0]; 
+    housesidesb=houseparts.children[1];
+    housesidesf=houseparts.children[2];
+    housesidesl=houseparts.children[3];
+    housesidesr=houseparts.children[4];
+    housetopmost=houseparts.children[5];
+    houselegsfl=houselegstop.children[0];
+    houselegsfr=houselegstop.children[1];
+    houselegsbl=houselegstop.children[2];
+    houselegsbr=houselegstop.children[3];
+    housetube=houselegstop.children[4];
+    housedoor=houselegstop.children[5];
+
+
+
+    base = teeterparts.children[0];
+    basetop = base.children[0];
+    basehandlelong = teeterparts.children[1];
+    baseseatfar = basehandlelong.children[0];
+    baseseatnear = basehandlelong.children[1];
+    nearhandle = basehandlelong.children[2];
+    farhandle = basehandlelong.children[3];
+    nearhandletop = nearhandle.children[0];
+    farhandletop = farhandle.children[0];
+
+
+    }
+
+    function createBall(rad,widthseg,heightseg) {
+
+        var ball = new THREE.Object3D();
+        var geometry = new THREE.SphereGeometry( rad,widthseg,heightseg ); 
+        var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } ); 
+        var sphere = new THREE.Mesh( geometry, material ); 
+        ball.add( sphere );
+
+        return ball;
+    }
+
+
+
+    function update() {
+    mouse.update();
+    keyboard.update();
+
+    if ( keyboard.pressed("Q") ) {
+    bodyparts.rotation.y += 0.02;
+    }
+    if ( keyboard.pressed("W") ) {
+    bodyparts.rotation.y -= 0.02;
+    }
+    if ( keyboard.pressed("E") ) {
+    bodyparts.position.y += 0.5;
+    }
+    if ( keyboard.pressed("R") ) {
+    bodyparts.position.y -= 0.5;
+    }
+
+    if ( keyboard.pressed("T") ) {
+    bodyparts.position.z += 0.5;
+    }
+    if ( keyboard.pressed("Y") ) {
+    bodyparts.position.z -= 0.5;
+    }
+    if ( keyboard.pressed("U") ) {
+    bodyparts.position.x += 0.9;
+    }
+    if ( keyboard.pressed("I") ) {
+    bodyparts.position.x -= 0.9;
+    }
+    if ( keyboard.pressed("O") ) {
+    personleglup.rotation.x += 0.09;
+    }
+   if ( keyboard.pressed("K") ) {
+    personlegrup.rotation.x += 0.09;
+    }
+    
+    if ( keyboard.pressed("A") ) {
+    personleglup.position.z -= 0.09;
+    }
+   if ( keyboard.pressed("S") ) {
+    personlegrup.position.z -= 0.09;
+    }
+    if ( keyboard.pressed("D") ) {
+    personlegrup.position.z += 0.09;
+    }
+   if ( keyboard.pressed("F") ) {
+    personlegrup.position.y += 0.09;
+    }
+    if ( keyboard.pressed("G") ) {
+    personhandl.rotation.z -= 0.09;
+    }
+   if ( keyboard.pressed("H") ) {
+    personhandr.rotation.z += 0.09;
+    }
+    if ( keyboard.pressed("J") ) {
+    personlegrup.rotation.z += 0.09;
+    }
+
+
+    //FAR PERSON
+    if ( keyboard.pressed("1") ) {
+    bodyparts1.rotation.y += 0.02;
+    }
+    if ( keyboard.pressed("2") ) {
+    bodyparts1.rotation.y -= 0.02;
+    }
+    if ( keyboard.pressed("3") ) {
+    bodyparts1.position.y += 0.02;
+    }
+    if ( keyboard.pressed("4") ) {
+    bodyparts1.position.y -= 0.02;
+    }
+
+    if ( keyboard.pressed("5") ) {
+    bodyparts1.position.z += 0.09;
+    }
+    if ( keyboard.pressed("6") ) {
+    bodyparts1.position.z -= 0.09;
+    }
+    if ( keyboard.pressed("7") ) {
+    bodyparts1.position.x += 0.09;
+    }
+    if ( keyboard.pressed("8") ) {
+    bodyparts1.position.x -= 0.09;
+    }
+    
+
+    if ( keyboard.pressed("9") ) {
+    basehandlelong.rotation.x -= 0.02;
+    }
+
+    if ( keyboard.pressed("0") ) {
+    basehandlelong.rotation.x += 0.02;
+    }
+
+
+    if ( keyboard.pressed("Z") ) {
+    ball.position.z += 0.9;
+    }
+    if ( keyboard.pressed("X") ) {
+    ball.position.z -= 0.9;
+    }
+
+
+
+    if ( keyboard.pressed("P") ) {
+    console.log(basehandlelong.rotation.x,bodyparts.rotation.y,bodyparts.position.y,bodyparts.position.z,bodyparts.position.x,personleglup.rotation.x,personleglup.position.z,personlegrup.position.z,personlegrup.position.y,personhandl.rotation.z,personhandr.rotation.z,personlegrup.rotation.z,bodyparts1.rotation.y,bodyparts1.position.y,bodyparts1.position.z,bodyparts1.position.x,ball.position.z);
+
+    }
+
+    }
+
+
+
+
+    // add lights to the scene
+    function createLights()
+    {
+    // Ambient Light (color, intensity)
+    var ambient = new THREE.AmbientLight(0x404040); // soft white
+    scene.add(ambient);
+
+    // DirectionalLight (color, intensity) in the direction the camera faces
+    var eyeLight = new THREE.DirectionalLight( "white", 0.7 );  // global, do not redefine here
+    eyeLight.position.set(camera.position.x-100,camera.position.y+10,camera.position.z);  // camera viewpoint
+    scene.add(eyeLight);
+
+    // Dim DirectionalLight (color, intensity) shining from above
+    var topLight = new THREE.DirectionalLight( "white", 0.7 ); 
+    topLight.position.set(0,20,0);
+    scene.add( topLight );
+
+    //Extra lighting feature
+    var sunlight = new THREE.PointLight(0x404040, 1.0, 0, 2);
+    sunlight.position.set(-80,50,-45);
+    scene.add(sunlight);
+    }
+
+
+    
+    // Render the scene. This is called for each frame of the animation.
+    function render() {
+    requestAnimationFrame( render );
+
+    // code for things to change here
+
+   var keys = keyframeInterp(keyframes, 30, clock.getElapsedTime() - startTime);
+
+    //var camKeys = keyframeInterp(Camerakeyframes, 20, clock.getElapsedTime() - startTime);
+
+   basehandlelong.rotation.x=keys[0];
+   bodyparts.rotation.y=keys[1];
+   bodyparts.position.y=keys[2];
+   bodyparts.position.z=keys[3];
+   bodyparts.position.x=keys[4];
+   personleglup.rotation.x=keys[5];
+   personleglup.position.z=keys[6];
+   personlegrup.position.z=keys[7];
+   personlegrup.position.y=keys[8];
+   personhandl.rotation.z=keys[9];
+   personhandr.rotation.z=keys[10];
+   personlegrup.rotation.z=keys[11];
+   bodyparts1.rotation.y=keys[12];
+   bodyparts1.position.y=keys[13];
+   bodyparts1.position.z=keys[14];
+   bodyparts1.position.x=keys[15];
+   ball.position.z=keys[16];
+   
+
+
+    //angle += 0.0050
+    //camera.position.set(camKeys[0]*Math.sin(angle), camKeys[1],camKeys[2]*Math.cos(angle));
+
+    renderer.render(scene, camera);
+    update();
+    }
+
+    // reset canvas size and camera aspect ratio on window resize
+    function onWindowResize() {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    }
+
+    //----------------------------------------------------------------------------------
+
+    // The main() function is called by the onload event when the document has loaded.
+    function main() {
+        try {
+            canvas = document.getElementById("glcanvas");
+            renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: true} );
+            // set full screen
+            renderer.setSize(window.innerWidth, window.innerHeight); 
+            // adjust on window resize
+            window.addEventListener('resize', onWindowResize);             
+        }
+        catch (e) {
+            document.getElementById("canvas-holder").innerHTML = "<h3><b>WebGL is not available.</b><h3>";
+            return;
+        }
+    
+        // create camera
+        createCamera();
+        
+        // create scene 
+        createScene();
+
+        // render scene
+        render();
+
+        //create lights
+        createLights();
+    }
+
+</script>
+
+</head>
+<body onload="main()">
+<div id="canvas-holder">
+    <canvas id="glcanvas" width="1200" height="600"></canvas>
+</div>
+</body>
+</html>
