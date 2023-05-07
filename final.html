@@ -3,7 +3,7 @@
 <title>Final Project</title>
 <script src="https://csc8470-fall2022.github.io/lib/three.js"></script>
 <script src="https://csc8470-fall2022.github.io/lib/OrbitControls.js"></script>
-<script src="https://csc8470-fall2022.github.io/lib/KeyboardState.js"></script>
+<script src="https://csc8470-fall2022.github.io/lib/keyboard.js"></script>
 
 
 
@@ -536,7 +536,7 @@
     {
         var bin = new THREE.Object3D();
 
-        var dustbinTexture = texLoader.load("groundgrass.jpg");
+        var dustbinTexture = texLoader.load("bingreen.jpg");
         var dustbinMaterial = new THREE.MeshPhongMaterial( { map: dustbinTexture ,side:THREE.DoubleSide} );
         dustbinTexture.wrapS = THREE.MirroredRepeatWrapping;
         dustbinTexture.wrapT = THREE.MirroredRepeatWrapping;
