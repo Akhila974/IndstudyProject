@@ -109,7 +109,7 @@
     var background = new THREE.Object3D(); 
 
     var texLoader = new THREE.TextureLoader();
-    var backgroundTexture = texLoader.load("groundgrass.jpg");
+    var backgroundTexture = texLoader.load("grass.jpg");
     var backgroundMaterial = new THREE.MeshPhongMaterial( { map: backgroundTexture ,side:THREE.DoubleSide} );
     backgroundTexture.wrapS = THREE.MirroredRepeatWrapping;
     backgroundTexture.wrapT = THREE.MirroredRepeatWrapping;
@@ -117,8 +117,8 @@
 
     var geom = new THREE.PlaneGeometry(700, 700); //width,height
     var material = new THREE.MeshPhongMaterial({color: 0x00FF00, side: THREE.DoubleSide}); 
-    var ground = new THREE.Mesh( geom, material);
-    //var ground = new THREE.Mesh( geom, backgroundMaterial);
+    //var ground = new THREE.Mesh( geom, material);
+    var ground = new THREE.Mesh( geom, backgroundMaterial);
     ground.rotation.x = Math.PI/2;
     scene.add(ground);
     var material = new THREE.MeshPhongMaterial({color: 0x00FF00, side: THREE.DoubleSide}); 
