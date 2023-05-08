@@ -571,9 +571,18 @@
     function createHouselegs(radtop, radbot, height, radseg)
     {
         var hlegs = new THREE.Object3D();
+
+        var texLoader = new THREE.TextureLoader();
+        var houselegsTexture = texLoader.load("housebase.jpg");
+        var houselegsMaterial = new THREE.MeshPhongMaterial( { map: houselegsTexture ,side:THREE.DoubleSide} );
+        houselegsTexture.wrapS = THREE.MirroredRepeatWrapping;
+        houselegsTexture.wrapT = THREE.MirroredRepeatWrapping;
+        houselegsTexture.repeat.set( 4,4 );
+
         var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
         var material = new THREE.MeshBasicMaterial( {color: 0xffff00} ); 
-        var cylinder = new THREE.Mesh( geometry, material ); 
+        //var cylinder = new THREE.Mesh( geometry, material ); 
+        var cylinder = new THREE.Mesh( geometry, houselegsMaterial ); 
         hlegs.add( cylinder );
         return hlegs;
     }
