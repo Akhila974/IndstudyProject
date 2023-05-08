@@ -269,8 +269,8 @@
     var texLoader = new THREE.TextureLoader();
     var barkTexture = texLoader.load("bark.jpg");
     var barkMaterial = new THREE.MeshPhongMaterial( { map: barkTexture,side: THREE.DoubleSide } );
-    var cylinder = new THREE.Mesh( geometry, material );
-    //var cylinder = new THREE.Mesh( geometry, barkMaterial );
+    //var cylinder = new THREE.Mesh( geometry, material );
+    var cylinder = new THREE.Mesh( geometry, barkMaterial );
     tree.add( cylinder );
 
     var geometry = new THREE.ConeGeometry( 35, 80, 42 );
