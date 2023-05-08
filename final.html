@@ -998,9 +998,18 @@
     function createBall(rad,widthseg,heightseg) {
 
         var ball = new THREE.Object3D();
+
+        var texLoader = new THREE.TextureLoader();
+        var ballTexture = texLoader.load("ball.jpg");
+        var ballMaterial = new THREE.MeshPhongMaterial( { map: ballTexture ,side:THREE.DoubleSide} );
+        ballTexture.wrapS = THREE.MirroredRepeatWrapping;
+        ballTexture.wrapT = THREE.MirroredRepeatWrapping;
+        ballTexture.repeat.set( 4,4 );
+
         var geometry = new THREE.SphereGeometry( rad,widthseg,heightseg ); 
         var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } ); 
-        var sphere = new THREE.Mesh( geometry, material ); 
+        //var sphere = new THREE.Mesh( geometry, material ); 
+        var sphere = new THREE.Mesh( geometry, ballMaterial ); 
         ball.add( sphere );
 
         return ball;
