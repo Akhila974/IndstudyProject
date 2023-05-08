@@ -181,7 +181,7 @@
     var geometry = new THREE.BoxGeometry( width, height);
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
     var texLoader = new THREE.TextureLoader();
-    var skyTexture = texLoader.load("skynew.jpg");
+    var skyTexture = texLoader.load("frontsky.jpg");
     var skyMaterial = new THREE.MeshPhongMaterial( { map: skyTexture,side: THREE.DoubleSide } );
     skyTexture.wrapS = THREE.MirroredRepeatWrapping;
     skyTexture.wrapT = THREE.MirroredRepeatWrapping;
