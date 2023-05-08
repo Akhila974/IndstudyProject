@@ -186,8 +186,8 @@
     skyTexture.wrapS = THREE.MirroredRepeatWrapping;
     skyTexture.wrapT = THREE.MirroredRepeatWrapping;
     skyTexture.repeat.set( 2,2 );
-    var cube = new THREE.Mesh( geometry, material );
-    //var cube = new THREE.Mesh( geometry, skyMaterial );
+    //var cube = new THREE.Mesh( geometry, material );
+    var cube = new THREE.Mesh( geometry, skyMaterial );
     merry.add( cube ); 
     return merry;
     }
@@ -939,7 +939,7 @@
         var stripe=new THREE.Object3D();
 
         var texLoader = new THREE.TextureLoader();
-        var stripeTexture = texLoader.load("ball.jpg");
+        var stripeTexture = texLoader.load("stripe.jpg");
         var stripeMaterial = new THREE.MeshPhongMaterial( { map: stripeTexture ,side:THREE.DoubleSide} );
         stripeTexture.wrapS = THREE.MirroredRepeatWrapping;
         stripeTexture.wrapT = THREE.MirroredRepeatWrapping;
