@@ -6,7 +6,6 @@
 <script src="https://csc8470-fall2022.github.io/lib/OrbitControls.js"></script>
 
 
-
 <script>
     var scene, camera, renderer; // Three.js rendering basics
     var canvas; // The canvas on which the image is rendered
@@ -282,7 +281,7 @@
     treeTexture.repeat.set( 4,4 );
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
     //var cone = new THREE.Mesh( geometry, material );
-    var cone = new THREE.Mesh( geometry, christmasMaterial );
+    var cone = new THREE.Mesh( geometry, treeMaterial );
     cone.position.set(0,45,0);
     tree.add( cone );
     return tree;
