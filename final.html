@@ -132,8 +132,8 @@
     wallTexture.wrapS = THREE.MirroredRepeatWrapping;
     wallTexture.wrapT = THREE.MirroredRepeatWrapping;
     wallTexture.repeat.set( 2,16 );
-    var cube = new THREE.Mesh( geometry, material );
-    //var cube = new THREE.Mesh( geometry, wallMaterial );
+    //var cube = new THREE.Mesh( geometry, material );
+    var cube = new THREE.Mesh( geometry, wallMaterial );
 
     background.add( cube ); 
     return background;
