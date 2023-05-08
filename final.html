@@ -713,9 +713,18 @@
     function createTeeterBoard(width, height, depth)
     {
         var teeter = new THREE.Object3D();
+
+       var texLoader = new THREE.TextureLoader();
+        var teeterTexture = texLoader.load("redteeter.jpg");
+        var teeterTexture = new THREE.MeshPhongMaterial( { map: teeterTexture ,side:THREE.DoubleSide} );
+        teeterTexture.wrapS = THREE.MirroredRepeatWrapping;
+        teeterTexture.wrapT = THREE.MirroredRepeatWrapping;
+        teeterTexture.repeat.set( 4,4 ); 
+
         var geometry = new THREE.BoxGeometry( width, height, depth );
         var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
-        var cube = new THREE.Mesh( geometry, material ); 
+        //var cube = new THREE.Mesh( geometry, material ); 
+        var cube = new THREE.Mesh( geometry, teeterTexture ); 
         teeter.add( cube );
         return teeter;
     }
