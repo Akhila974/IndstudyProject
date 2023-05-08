@@ -586,7 +586,7 @@
         var hsides = new THREE.Object3D();
 
         var texLoader = new THREE.TextureLoader();
-        var houseTexture = texLoader.load("christree.jpg");
+        var houseTexture = texLoader.load("housesides.jpg");
         var houseMaterial = new THREE.MeshPhongMaterial( { map: houseTexture ,side:THREE.DoubleSide} );
         houseTexture.wrapS = THREE.MirroredRepeatWrapping;
         houseTexture.wrapT = THREE.MirroredRepeatWrapping;
