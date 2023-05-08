@@ -166,10 +166,10 @@
     var geometry = new THREE.BoxGeometry( width, height);
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
     var texLoader = new THREE.TextureLoader();
-    var skyTexture = texLoader.load("sky.jpg");
+    var skyTexture = texLoader.load("frontsky.jpg");
     var skyMaterial = new THREE.MeshPhongMaterial( { map: skyTexture,side: THREE.DoubleSide } );
-    var cube = new THREE.Mesh( geometry, material );
-    //var cube = new THREE.Mesh( geometry, skyMaterial );
+    //var cube = new THREE.Mesh( geometry, material );
+    var cube = new THREE.Mesh( geometry, skyMaterial );
     sky.add( cube ); 
     return sky;
     }
