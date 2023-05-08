@@ -684,9 +684,18 @@
     function createLadder(radtop, radbot, height, radseg)
     {
         var ladder = new THREE.Object3D();
+
+        var texLoader = new THREE.TextureLoader();
+        var ladderTexture = texLoader.load("ladder.jpg");
+        var ladderMaterial = new THREE.MeshPhongMaterial( { map: ladderTexture ,side:THREE.DoubleSide} );
+        ladderTexture.wrapS = THREE.MirroredRepeatWrapping;
+        ladderTexture.wrapT = THREE.MirroredRepeatWrapping;
+        ladderTexture.repeat.set( 4,4 );
+
         var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
         var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
-        var cylinder = new THREE.Mesh( geometry, material );
+        //var cylinder = new THREE.Mesh( geometry, material );
+        var cylinder = new THREE.Mesh( geometry, ladderMaterial );
         ladder.add(cylinder);
         return ladder;
     }
