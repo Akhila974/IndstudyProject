@@ -319,10 +319,10 @@
     var geometry = new THREE.BoxGeometry( width, height, depth );
     var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
     var texLoader = new THREE.TextureLoader();
-    var tableTexture = texLoader.load("table.jpg");
+    var tableTexture = texLoader.load("bench.jpg");
     var tableMaterial = new THREE.MeshPhongMaterial( { map: tableTexture,side: THREE.DoubleSide } );
-    var cube = new THREE.Mesh( geometry, material );
-    //var cube = new THREE.Mesh( geometry, tableMaterial );
+    //var cube = new THREE.Mesh( geometry, material );
+    var cube = new THREE.Mesh( geometry, tableMaterial );
     tableparts.add( cube );
     return tableparts;
     }
@@ -333,10 +333,10 @@
     var geometry = new THREE.BoxGeometry( width, height, depth );
     var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
     var texLoader = new THREE.TextureLoader();
-    var rodsTexture = texLoader.load("tablerods.jpg");
+    var rodsTexture = texLoader.load("bench.jpg");
     var rodsMaterial = new THREE.MeshPhongMaterial( { map: rodsTexture,side: THREE.DoubleSide } );
-    var cube = new THREE.Mesh( geometry, material );
-    //var cube = new THREE.Mesh( geometry, rodsMaterial );
+    //var cube = new THREE.Mesh( geometry, material );
+    var cube = new THREE.Mesh( geometry, rodsMaterial );
     tablerods.add( cube );
     return tablerods;
     }
