@@ -554,10 +554,18 @@
     function createDustbintop()
     {
         var bintop = new THREE.Object3D();
+
+        var dustbintopTexture = texLoader.load("housetop.jpg");
+        var dustbintopMaterial = new THREE.MeshPhongMaterial( { map: dustbintopTexture ,side:THREE.DoubleSide} );
+        dustbintopTexture.wrapS = THREE.MirroredRepeatWrapping;
+        dustbintopTexture.wrapT = THREE.MirroredRepeatWrapping;
+        dustbintopTexture.repeat.set( 4,4 );
+
         var geometry = new THREE.CylinderGeometry( 35, 25, 10, 32 ); 
         //var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
         var material = new THREE.MeshBasicMaterial( {color: 0xff0000} ); 
-        var cylinder = new THREE.Mesh( geometry, material ); 
+        //var cylinder = new THREE.Mesh( geometry, material ); 
+        var cylinder = new THREE.Mesh( geometry, dustbintopMaterial ); 
         bintop.add( cylinder );
         return bintop;
     }
