@@ -938,9 +938,18 @@
         
         var stripe=new THREE.Object3D();
 
+        var texLoader = new THREE.TextureLoader();
+        var stripeTexture = texLoader.load("ball.jpg");
+        var stripeMaterial = new THREE.MeshPhongMaterial( { map: stripeTexture ,side:THREE.DoubleSide} );
+        stripeTexture.wrapS = THREE.MirroredRepeatWrapping;
+        stripeTexture.wrapT = THREE.MirroredRepeatWrapping;
+        stripeTexture.repeat.set( 2,2 );
+
+
         var geometry = new THREE.TorusGeometry( radius,tube,radseg,tubseg,arc); 
         var material = new THREE.MeshBasicMaterial( { color: 0x000000 } ); 
-        var torus = new THREE.Mesh( geometry, material ); 
+        //var torus = new THREE.Mesh( geometry, material ); 
+        var torus = new THREE.Mesh( geometry, stripeMaterial );
         stripe.add( torus );
 
         return stripe;
