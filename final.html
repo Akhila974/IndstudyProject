@@ -113,7 +113,7 @@
     var backgroundMaterial = new THREE.MeshPhongMaterial( { map: backgroundTexture ,side:THREE.DoubleSide} );
     backgroundTexture.wrapS = THREE.MirroredRepeatWrapping;
     backgroundTexture.wrapT = THREE.MirroredRepeatWrapping;
-    backgroundTexture.repeat.set( 4,4 );
+    backgroundTexture.repeat.set( 16,4 );
 
     var geom = new THREE.PlaneGeometry(700, 700); //width,height
     var material = new THREE.MeshPhongMaterial({color: 0x00FF00, side: THREE.DoubleSide}); 
