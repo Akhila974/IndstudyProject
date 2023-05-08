@@ -683,10 +683,10 @@
 
         var texLoader = new THREE.TextureLoader();
         var tubeTexture = texLoader.load("tube.jpg");
-        var tubeMaterial = new THREE.MeshPhongMaterial( { map: tubeMaterial ,side:THREE.DoubleSide} );
-        tubeMaterial.wrapS = THREE.MirroredRepeatWrapping;
-        tubeMaterial.wrapT = THREE.MirroredRepeatWrapping;
-        tubeMaterial.repeat.set( 4,4 );
+        var tubeMaterial = new THREE.MeshPhongMaterial( { map: tubeTexture ,side:THREE.DoubleSide} );
+        tubeTexture.wrapS = THREE.MirroredRepeatWrapping;
+        tubeTexture.wrapT = THREE.MirroredRepeatWrapping;
+        tubeTexture.repeat.set( 4,4 );
 
         var geometry = new THREE.TubeGeometry( path, 64, 6, 80, false );
         var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
