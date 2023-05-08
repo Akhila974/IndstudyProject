@@ -275,14 +275,14 @@
 
     var geometry = new THREE.ConeGeometry( 35, 80, 42 );
     var texLoader = new THREE.TextureLoader();
-    var christmasTexture = texLoader.load("christree.jpg");
-    var christmasMaterial = new THREE.MeshPhongMaterial( { map: christmasTexture ,side:THREE.DoubleSide} );
-    christmasTexture.wrapS = THREE.MirroredRepeatWrapping;
-    christmasTexture.wrapT = THREE.MirroredRepeatWrapping;
-    christmasTexture.repeat.set( 4,4 );
+    var treeTexture = texLoader.load("tree.jpg");
+    var treeMaterial = new THREE.MeshPhongMaterial( { map: treeTexture ,side:THREE.DoubleSide} );
+    treeTexture.wrapS = THREE.MirroredRepeatWrapping;
+    treeTexture.wrapT = THREE.MirroredRepeatWrapping;
+    treeTexture.repeat.set( 4,4 );
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
-    var cone = new THREE.Mesh( geometry, material );
-    //var cone = new THREE.Mesh( geometry, christmasMaterial );
+    //var cone = new THREE.Mesh( geometry, material );
+    var cone = new THREE.Mesh( geometry, christmasMaterial );
     cone.position.set(0,45,0);
     tree.add( cone );
     return tree;
