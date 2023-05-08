@@ -682,15 +682,16 @@
         var path = new CustomSinCurve( 58 );
 
         var texLoader = new THREE.TextureLoader();
-        var housetopTexture = texLoader.load("tube.jpg");
-        var housetopMaterial = new THREE.MeshPhongMaterial( { map: housetopTexture ,side:THREE.DoubleSide} );
-        housetopTexture.wrapS = THREE.MirroredRepeatWrapping;
-        housetopTexture.wrapT = THREE.MirroredRepeatWrapping;
-        housetopTexture.repeat.set( 4,4 );
+        var tubeTexture = texLoader.load("tube.jpg");
+        var tubeMaterial = new THREE.MeshPhongMaterial( { map: tubeMaterial ,side:THREE.DoubleSide} );
+        tubeMaterial.wrapS = THREE.MirroredRepeatWrapping;
+        tubeMaterial.wrapT = THREE.MirroredRepeatWrapping;
+        tubeMaterial.repeat.set( 4,4 );
 
         var geometry = new THREE.TubeGeometry( path, 64, 6, 80, false );
         var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-        var mesh = new THREE.Mesh( geometry, material );
+        //var mesh = new THREE.Mesh( geometry, material );
+        var mesh = new THREE.Mesh( geometry, tubeMaterial );
         tube.add( mesh );
 
         return tube;
