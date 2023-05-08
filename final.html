@@ -562,7 +562,6 @@
         dustbintopTexture.repeat.set( 4,4 );
 
         var geometry = new THREE.CylinderGeometry( 35, 25, 10, 32 ); 
-        //var geometry = new THREE.CylinderGeometry( radtop, radbot, height, radseg ); 
         var material = new THREE.MeshBasicMaterial( {color: 0xff0000} ); 
         //var cylinder = new THREE.Mesh( geometry, material ); 
         var cylinder = new THREE.Mesh( geometry, dustbintopMaterial ); 
@@ -582,9 +581,18 @@
     function createHouselegstop(width, height, depth)
     {
         var hlegstop = new THREE.Object3D();
+
+        var texLoader = new THREE.TextureLoader();
+        var housebaseTexture = texLoader.load("housebase.jpg");
+        var housebaseMaterial = new THREE.MeshPhongMaterial( { map: housebaseTexture ,side:THREE.DoubleSide} );
+        housebaseTexture.wrapS = THREE.MirroredRepeatWrapping;
+        housebaseTexture.wrapT = THREE.MirroredRepeatWrapping;
+        housebaseTexture.repeat.set( 4,4 );
+
         var geometry = new THREE.BoxGeometry( width, height, depth );
         var material = new THREE.MeshBasicMaterial( {color: 0xffffff} ); 
-        var cube = new THREE.Mesh( geometry, material ); 
+        //var cube = new THREE.Mesh( geometry, material ); 
+        var cube = new THREE.Mesh( geometry, housebaseMaterial ); 
         hlegstop.add( cube );
         return hlegstop;
     }
