@@ -1237,9 +1237,9 @@
 
     // code for things to change here
 
-   var keys = keyframeInterp(keyframes, 30, clock.getElapsedTime() - startTime);
+    var keys = keyframeInterp(keyframes, 30, clock.getElapsedTime() - startTime);
 
-    //var camKeys = keyframeInterp(Camerakeyframes, 20, clock.getElapsedTime() - startTime);
+    var camKeys = keyframeInterp(Camerakeyframes, 20, clock.getElapsedTime() - startTime);
 
    basehandlelong.rotation.x=keys[0];
    bodyparts.rotation.y=keys[1];
@@ -1261,8 +1261,8 @@
    
 
 
-    //angle += 0.0050
-    //camera.position.set(camKeys[0]*Math.sin(angle), camKeys[1],camKeys[2]*Math.cos(angle));
+    angle += 0.0050
+    camera.position.set(camKeys[0]*Math.sin(angle), camKeys[1],camKeys[2]*Math.cos(angle));
 
     renderer.render(scene, camera);
     update();
