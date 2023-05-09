@@ -140,26 +140,6 @@
     }
 
 
-    
-    function createStand(width,height,depth)
-    {
-    var stands = new THREE.Object3D();
-    var geometry = new THREE.BoxGeometry( width, height, depth);//width,height,depth
-    var material = new THREE.MeshPhongMaterial( {color: 0xffffff} );
-    var texLoader = new THREE.TextureLoader();
-
-    var standTexture = texLoader.load("swingstandnew.jpg");
-    var standMaterial = new THREE.MeshPhongMaterial( { map: standTexture,side: THREE.DoubleSide } );
-    standTexture.wrapS = THREE.MirroredRepeatWrapping;
-    standTexture.wrapT = THREE.MirroredRepeatWrapping;
-    standTexture.repeat.set( 2,16 );
-    var cube = new THREE.Mesh( geometry, material );
-    //var cube = new THREE.Mesh( geometry, standMaterial );
-    stands.add( cube );
-    return stands;
-    }
-
-
     function createSky(width, height)
     {
     var sky = new THREE.Object3D();
@@ -175,9 +155,9 @@
     }
 
 
-    function createMerry(width, height)
+    function createGardensky(width, height)
     {
-    var merry = new THREE.Object3D();
+    var gardensky = new THREE.Object3D();
     var geometry = new THREE.BoxGeometry( width, height);
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
     var texLoader = new THREE.TextureLoader();
@@ -188,14 +168,15 @@
     //skyTexture.repeat.set( 1,1 );
     //var cube = new THREE.Mesh( geometry, material );
     var cube = new THREE.Mesh( geometry, skyMaterial );
-    merry.add( cube ); 
-    return merry;
+    gardensky.add( cube ); 
+    return gardensky;
     }
 
 
     function createSkyhouse(width, height)
     {
     var house = new THREE.Object3D();
+
     var geometry = new THREE.BoxGeometry( width, height);
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
     var texLoader = new THREE.TextureLoader();
@@ -203,6 +184,7 @@
     var houseMaterial = new THREE.MeshPhongMaterial( { map: houseTexture,side: THREE.DoubleSide } );
     //var cube = new THREE.Mesh( geometry, material );
     var cube = new THREE.Mesh( geometry, houseMaterial );
+
     house.add( cube ); 
     house.rotation.z=Math.PI;
     return house;
@@ -241,7 +223,7 @@
     backgroundl.position.set(-350,225,0);
     scene.add(backgroundl);
 
-    var backgroundb = createMerry(700,450);// back sky 
+    var backgroundb = createGardensky(700,450);// back sky 
     backgroundb.position.set(0,225,-350);
     backgroundb.rotation.x=Math.PI;
     scene.add(backgroundb);
@@ -249,14 +231,10 @@
     var backgroundf = createSkyhouse(700,450);// front sky
     backgroundf.position.set(0,225,350);
     scene.add(backgroundf);
-
-
-   
     var geom = new THREE.BoxGeometry(60, 30); //width,height //seat to sit
     var material = new THREE.MeshPhongMaterial({color: 0x000000, side: THREE.DoubleSide});
     var texLoader = new THREE.TextureLoader();
 
-    
     return walls;  
     }
 
@@ -313,9 +291,9 @@
     return trees;
     }
 
-    function createtableParts(width, height, depth)
+    function createBenchParts(width, height, depth)
     {
-    var tableparts = new THREE.Object3D();
+    var benchparts = new THREE.Object3D();
     var geometry = new THREE.BoxGeometry( width, height, depth );
     var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
     var texLoader = new THREE.TextureLoader();
@@ -323,13 +301,13 @@
     var tableMaterial = new THREE.MeshPhongMaterial( { map: tableTexture,side: THREE.DoubleSide } );
     //var cube = new THREE.Mesh( geometry, material );
     var cube = new THREE.Mesh( geometry, tableMaterial );
-    tableparts.add( cube );
-    return tableparts;
+    benchparts.add( cube );
+    return benchparts;
     }
 
-    function createtableRods(width, height, depth)
+    function createBenchRods(width, height, depth)
     {
-    var tablerods = new THREE.Object3D();
+    var benchrods = new THREE.Object3D();
 
     var geometry = new THREE.BoxGeometry( width, height, depth );
     var material = new THREE.MeshPhongMaterial( {color: 0x964B00} );
@@ -338,40 +316,40 @@
     var rodsMaterial = new THREE.MeshPhongMaterial( { map: rodsTexture,side: THREE.DoubleSide } );
     //var cube = new THREE.Mesh( geometry, material );
     var cube = new THREE.Mesh( geometry, rodsMaterial );
-    tablerods.add( cube );
-    return tablerods;
+    benchrods.add( cube );
+    return benchrods;
     }
 
-    function createTable()
+    function createBench()
     {
-    var tables = new THREE.Object3D();
+    var bench = new THREE.Object3D();
 
-    var tableseat = createtableParts(30,100,5);//table seat
+    var tableseat = createBenchParts(30,100,5);//table seat
     tableseat.position.set(0,27.5,0);
     tableseat.rotation.x=Math.PI/2;
     scene.add(tableseat);
 
-    var tableback = createtableParts(100,30,5);//table back
+    var tableback = createBenchParts(100,30,5);//table back
     tableback.position.set(-15,42.5,0);
     tableback.rotation.y=Math.PI/2;
     scene.add(tableback);
 
-    var tablefrleft = createtableRods(5,15,3);//table front left bal rod
+    var tablefrleft = createBenchRods(5,15,3);//table front left bal rod
     tablefrleft.position.set(-13,-48.5,5);
     tablefrleft.rotation.x=Math.PI/2;
     scene.add(tablefrleft);
 
-    var tablefrright = createtableRods(5,15,3);//table front right bal rod
+    var tablefrright = createBenchRods(5,15,3);//table front right bal rod
     tablefrright.position.set(-13,48.5,5);
     tablefrright.rotation.x=Math.PI/2;
     scene.add(tablefrright);
 
-    var tablebackleft = createtableRods(5,15,3);//table back left bal rod
+    var tablebackleft = createBenchRods(5,15,3);//table back left bal rod
     tablebackleft.position.set(13,48.5,5);
     tablebackleft.rotation.x=Math.PI/2;
     scene.add(tablebackleft);
 
-    var tablebackright = createtableRods(5,15,3);//table back right bal rod
+    var tablebackright = createBenchRods(5,15,3);//table back right bal rod
     tablebackright.position.set(13,-48.5,5);
     tablebackright.rotation.x=Math.PI/2;
     scene.add(tablebackright);
@@ -405,13 +383,7 @@
     function createEyes(radius, widthseg , heightseg)
     {
     var eyes = new THREE.Object3D();
-    var geometry = new THREE.SphereGeometry( radius, widthseg , heightseg );
-    var texLoader = new THREE.TextureLoader();
-    var eyesTexture = texLoader.load("eyes.jpg");
-    var eyesMaterial = new THREE.MeshPhongMaterial( { map: eyesTexture,side: THREE.DoubleSide } );
-    var material = new THREE.MeshPhongMaterial( { color: 0xffffff } );
     var sphere = new THREE.Mesh( geometry, material );
-    //var sphere = new THREE.Mesh( geometry, eyesMaterial );
     eyes.rotation.y=Math.PI/2;
     eyes.add( sphere );
     return eyes;
