@@ -396,8 +396,8 @@
     var texLoader = new THREE.TextureLoader();
     var dressTexture = texLoader.load("dress.jpg");
     var dressMaterial = new THREE.MeshPhongMaterial( { map: dressTexture,side: THREE.DoubleSide } );
-    //var cube = new THREE.Mesh( geometry, dressMaterial );
-    var cube = new THREE.Mesh( geometry, material );
+    var cube = new THREE.Mesh( geometry, dressMaterial );
+    //var cube = new THREE.Mesh( geometry, material );
     personparts.add( cube );
     return personparts;
     }
