@@ -1020,6 +1020,12 @@
     ball=createBall(12,32,15);
     ball.position.set(0,12,-50);
     scene.add(ball);
+
+
+    var near = 100;
+    var far = 450;
+    var color = 'white';
+    scene.fog = new THREE.Fog(color, near, far);
     
 
     personbody = bodyparts.children[0];
