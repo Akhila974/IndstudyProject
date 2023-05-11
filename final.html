@@ -18,7 +18,6 @@
     var startTime = clock.getElapsedTime();
     var texLoader = new THREE.TextureLoader();
     var keyboard = new KeyboardState();
-    var audioLoader = new THREE.AudioLoader();
     
     // Create a camera, sitting on the positive z-axis.  The camera is not part of the scene
     function createCamera() {
@@ -105,8 +104,9 @@
     //walls
     function createBackground(width, height)
     {
-    var background = new THREE.Object3D(); 
+    var background = new THREE.Object3D(); //container
 
+    //ground
     var texLoader = new THREE.TextureLoader();
     var backgroundTexture = texLoader.load("grass.jpg");
     var backgroundMaterial = new THREE.MeshPhongMaterial( { map: backgroundTexture ,side:THREE.DoubleSide} );
@@ -122,7 +122,7 @@
     scene.add(ground);
     var material = new THREE.MeshPhongMaterial({color: 0x00FF00, side: THREE.DoubleSide}); 
 
-    //ground
+    //small wall
     var geometry = new THREE.BoxGeometry( width, height);
     var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
     var texLoader = new THREE.TextureLoader();
@@ -693,25 +693,6 @@
     }
 
 
-    function createTeeterBoard(width, height, depth)
-    {
-        var teeter = new THREE.Object3D();
-
-        var texLoader = new THREE.TextureLoader();
-        var teeterTexture = texLoader.load("redteeter.jpg");
-        var teeterMaterial = new THREE.MeshPhongMaterial( { map: teeterTexture ,side:THREE.DoubleSide} );
-        teeterTexture.wrapS = THREE.MirroredRepeatWrapping;
-        teeterTexture.wrapT = THREE.MirroredRepeatWrapping;
-        teeterTexture.repeat.set( 4,4 ); 
-
-        var geometry = new THREE.BoxGeometry( width, height, depth );
-        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
-        //var cube = new THREE.Mesh( geometry, material ); 
-        var cube = new THREE.Mesh( geometry, teeterMaterial ); 
-        teeter.add( cube );
-        return teeter;
-    }
-
     function createHouse() 
     {
         var house = new THREE.Object3D();
@@ -841,6 +822,26 @@
 
         return house;
         
+    }
+
+
+    function createTeeterBoard(width, height, depth)
+    {
+        var teeter = new THREE.Object3D();
+
+        var texLoader = new THREE.TextureLoader();
+        var teeterTexture = texLoader.load("redteeter.jpg");
+        var teeterMaterial = new THREE.MeshPhongMaterial( { map: teeterTexture ,side:THREE.DoubleSide} );
+        teeterTexture.wrapS = THREE.MirroredRepeatWrapping;
+        teeterTexture.wrapT = THREE.MirroredRepeatWrapping;
+        teeterTexture.repeat.set( 4,4 ); 
+
+        var geometry = new THREE.BoxGeometry( width, height, depth );
+        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
+        //var cube = new THREE.Mesh( geometry, material ); 
+        var cube = new THREE.Mesh( geometry, teeterMaterial ); 
+        teeter.add( cube );
+        return teeter;
     }
 
 
